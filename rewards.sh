@@ -2,13 +2,13 @@
 #Microsoft rewards bot runner script
 
 AUTORERUN="" #change to "yes" if you want the script to rerun on fail
-EMAIL="" #Set your email address here, leave blank to not send
+EMAIL="" # Set your email address here, leave blank to not send
 DATE=$(date +%F)
 SUCCESS=0
 INCOMPLETES=0
 LOCATION="/home/pcarcade/gimme-the-points" # Change this to the LOCATION gimme the points is installed in
 ACCOUNTS=$(cat "$LOCATION/accounts.json" | grep '",' -c) # how many accounts are we running for?
-RERUN=$"$LOCATION/rewards.sh"
+RERUN=$"/home/pcarcade/points-runner/rewards.sh" # set to $LOCATION if this script is in the same place as gimme-the-points or the full path including filename if not
 STATS=$"$LOCATION/stats.json"
 ERRFILE=$"$LOCATION/error.log"
 
