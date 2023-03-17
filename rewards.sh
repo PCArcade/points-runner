@@ -1,8 +1,8 @@
 #!/bin/bash
 #Microsoft rewards bot runner script
 
-AUTORERUN="" #change to "yes" if you want the script to rerun on fail
-EMAIL="" # Set your email address here, leave blank to not send
+AUTORERUN="yes" #change to "yes" if you want the script to rerun on fail
+EMAIL="pcarcade@gmail.com" # Set your email address here, leave blank to not send
 DATE=$(date +%F)
 SUCCESS=0
 INCOMPLETES=0
