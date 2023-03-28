@@ -1,18 +1,18 @@
 #!/bin/bash
-#Microsoft rewards bot runner script
+# Gimme-the-points runner
 
 AUTORERUN="" #change to "yes" if you want the script to rerun on fail
 EMAIL="" # Set your email address here, leave blank to not send
 DATE=$(date +%F)
 SUCCESS=0
 INCOMPLETES=0
-LOCATION="/home/pcarcade/gimme-the-points" # Change this to the LOCATION gimme the points is installed in
+LOCATION="/home/user/gimme-the-points" # Change this to the LOCATION gimme the points is installed in
 ACCOUNTS=$(cat "$LOCATION/accounts.json" | grep '",' -c) # how many accounts are we running for?
-RERUN=$"/home/pcarcade/points-runner/rewards.sh" # set to $LOCATION if this script is in the same place as gimme-the-points or the full path including filename if not
+RERUN=$"/home/user/points-runner/points-runner.sh" # set to $LOCATION if this script is in the same place as gimme-the-points or the full path including filename if not
 STATS=$"$LOCATION/stats.json"
 ERRFILE=$"$LOCATION/error.log"
 
-#exit # uncomment this line and save whilst script is running if it is repeating constantly
+# cat $STATS | mail -A $STATS -s "looping error stats emailed" $EMAIL && exit #uncomment this line and save whilst script is running if the cronjob is running constantly
 
 cd $LOCATION
 
