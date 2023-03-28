@@ -12,6 +12,8 @@ RERUN=$"/home/pcarcade/points-runner/rewards.sh" # set to $LOCATION if this scri
 STATS=$"$LOCATION/stats.json"
 ERRFILE=$"$LOCATION/error.log"
 
+#exit #uncomment this line whilst script is running if it is repeating constantly
+
 cd $LOCATION
 
 #Clean up from previous day
