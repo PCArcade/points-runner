@@ -4,17 +4,14 @@
 AUTORERUN="yes" # yes or no depending on whether you want the scrip to re run on fail
 LOOPS=3 # times the script will re-run on fail (to stop infinite looping)
 EMAIL="" # Set your email address here, leave blank to not send
-DATE=$(date +%F)
+DATE=$(date +%F) # Get today's date in YYYY-MM-DD formate
 LOCATION="/home/user/gimme-the-points" # Change this to the LOCATION gimme the points is installed in
 ACCOUNTS=$(cat "$LOCATION/accounts.json" | grep '",' -c) # how many accounts are we running for?
 STATS=$"$LOCATION/stats.json"
 ERRFILE=$"$LOCATION/error.log"
-LOOPS=3
+LOOPS=3 # Number of times to loop on error (recommended is 3 as this should clear all the errors that are likely to be able to be cleared)
 declare -i COUNT=0 # limits the amout of times the script will loop
 CLEANUP="no" # Remove previous log files or not "yes" renames stats.json and error.log with today's date appended 
-
-#uncomment the line below and save whilst script is running if the cronjob is running constantly - HOPEFULLY no longer needed will check then remove
-#cat $STATS | mail -A $STATS -s "looping error stats emailed" $EMAIL && exit 
 
 cd $LOCATION
 
@@ -30,7 +27,8 @@ then
         	mv -f $STATS $LOCATION/logs/stats$DATE.json
 	fi
 fi
-#npm install - #needed if config.json has changed
+#Update gimme the points and components
+git -C $lOCATION pull
 npm update #if config.json NOT changed use this one
 
 loop()
@@ -41,6 +39,7 @@ then
 
 #--------------------------------------------------------------------------------------------------------------------------
 # Everything below checks for the successful running of the script
+# Starting with handling of the error.log file if it exists 
 #--------------------------------------------------------------------------------------------------------------------------
 
 	if [ -f "$ERRFILE" ] # Does an error file exist
@@ -65,8 +64,11 @@ then
 			((COUNT++))
         	        loop
 	        fi
+#-----------------------------------------------------------------------------------------------------------------------------------
+# If error.log is ok, the below checks the amount of accounts that completed is the same as the number of accounts in accounts.json
+#-----------------------------------------------------------------------------------------------------------------------------------
 
-	else #checks the stat.json file
+	else
 		ACCOUNTSRAN=$(cat $STATS | grep '"last_ran"' -c) #find out how many accounts the scipt ran for
 		if [ $ACCOUNTSRAN == $ACCOUNTS ] #check that the script ran for all accounts if so do this block below
 		then
@@ -105,9 +107,11 @@ then
 			if
 				[ $INCOMPLETES = 0 ] # if there are no incomplete  tasks email the stats file to the email address specified
 			then
+
 #--------------------------------------------------------------------------------------------------------------------
 #                                       check for missing searches
 #--------------------------------------------------------------------------------------------------------------------
+
 				DESKTOTAL=$(cat $STATS | grep "desktop" | grep -oP '^\D*\d+\D*\K\d+' | head -1)
 				for i in $(cat $STATS | grep "desktop" | grep -o -E '[0-9]+ ')
 			        do
@@ -149,9 +153,10 @@ then
 	        	                        loop
 	                        	fi
 				else
-#---------------------------------------------------------------------------------------------------------------------
-#                                              search check end
-#---------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------
+# Below is if no errors are encoutered to this point, does one last check for dashboard tasks and searhes being incomplete
+# sends success message if they are or Incomplete message detailing which is wrong if not
+#--------------------------------------------------------------------------------------------------------------------------------
 				if
 					[ "$EMAIL" != "" ]
 				then
