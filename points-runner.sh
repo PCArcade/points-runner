@@ -2,7 +2,6 @@
 #Microsoft rewards bot runner script
 
 AUTORERUN="yes" # yes or no depending on whether you want the scrip to re run on fail
-LOOPS=3 # times the script will re-run on fail (to stop infinite looping)
 EMAIL="" # Set your email address here, leave blank to not send
 DATE=$(date +%F) # Get today's date in YYYY-MM-DD formate
 LOCATION="/home/user/gimme-the-points" # Change this to the LOCATION gimme the points is installed in
