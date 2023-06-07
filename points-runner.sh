@@ -49,7 +49,6 @@ then
 	else
 	        ERRSIZE=0 # if no set ERRSIZE to 0
 	fi
-	ERRSIZE=0 # sets error size to 0 for debugging purposes
 	if [ $ERRSIZE -gt 0 ] #check that the file is not blank (0 siz0)
 	then
 		if
@@ -63,6 +62,7 @@ then
         		[ $AUTORERUN == "yes" ]
 	        then
 			unset ERRSIZE
+			((COUNT++))
         	        loop
 	        fi
 
@@ -194,5 +194,4 @@ then
 	fi
 fi
 }
-
 loop
