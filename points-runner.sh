@@ -1,5 +1,8 @@
 #!/bin/bash
-#Microsoft rewards bot runner script
+
+#-------------------------------------------------------------
+#           Microsoft rewards bot runner script
+#-------------------------------------------------------------
 
 AUTORERUN="yes" # yes or no depending on whether you want the scrip to re run on fail
 EMAIL="" # Set your email address here, leave blank to not send
