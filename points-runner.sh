@@ -31,7 +31,7 @@ then
 fi
 #Update gimme the points and components
 git -C $lOCATION pull
-npm update #if config.json NOT changed use this one
+npm update
 
 loop()
 {
@@ -55,7 +55,7 @@ then
 		if
 			[ "$EMAIL" != "" ] #if $EMAIL Variable is populated sent fail message and rerun
 		then
-			cat $ERRFILE | mail -A $ERRFILE -s "Gimme the Points has failed check attached logs" $EMAIL # notifies of errors and attaches error log
+			cat $ERRFILE | mail -A $ERRFILE -A $STATS -s "Gimme the Points has failed check attached logs" $EMAIL # notifies of errors and attaches error log
 		else
 			echo "Gimme the Points has failed check logs"
 		fi
