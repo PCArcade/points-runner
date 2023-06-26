@@ -30,7 +30,7 @@ then
 	fi
 fi
 #Update gimme the points and components
-git -C $lOCATION pull
+git -C $LOCATION pull
 npm update
 
 loop()
