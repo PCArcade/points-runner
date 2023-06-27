@@ -16,19 +16,25 @@ declare -i COUNT=0 # limits the amout of times the script will loop
 CLEANUP="no" # Remove previous log files or not "yes" renames stats.json and error.log with today's date appended 
 
 cd $LOCATION
-
-#Clean up from previous day
 if [ $CLEANUP == "yes" ]
 then
-	if [ -f "$ERRFILE" ]
-	then
-        	mv -f $ERRFILE $LOCATION/logs/error$DATE.log
-	fi
-	if [ -f "$STATS" ]
-	then
-        	mv -f $STATS $LOCATION/logs/stats$DATE.json
-	fi
+        if [[ -d "$LOCATION/logs" ]]
+        then
+                :
+        else
+                mkdir $LOCATION/logs
+        fi
+        if [ -f "$ERRFILE" ]
+        then
+                mv -f $ERRFILE $LOCATION/logs/error$DATE.log
+        fi
+        if [ -f "$STATS" ]
+        then
+                mv -f $STATS $LOCATION/logs/stats$DATE.json
+        fi
 fi
+#Clean up from previous day
+
 #Update gimme the points and components
 git -C $LOCATION pull
 npm update
